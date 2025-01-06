@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Book } from '../types'
+import type { Book } from '../types'
 
 interface BookListProps {
   books: Book[]
@@ -22,6 +22,7 @@ export const BookList: FC<BookListProps> = ({ books, selectedBookId, onSelectBoo
             <div className="card-body p-4">
               <h3 className="card-title text-lg">{book.title}</h3>
               <p className="text-sm opacity-70">{book.author}</p>
+              <p className="text-sm opacity-70"> 🔖 Notes: {book.notesCount}</p>
             </div>
           </div>
         ))}

@@ -71,7 +71,14 @@ fn parse_bk_library(path: &PathBuf) -> Result<Vec<Book>, rusqlite::Error> {
 
 fn parse_ae_annotation(path: &PathBuf) -> Result<Vec<Annotation>, rusqlite::Error> {
     let conn = Connection::open(path)?;
-    let mut stmt = conn.prepare("SELECT ZANNOTATIONASSETID, ZANNOTATIONSELECTEDTEXT, ZANNOTATIONNOTE FROM ZAEANNOTATION")?;
+    let mut stmt = conn.prepare(
+        "SELECT ZANNOTATIONASSETID, ZANNOTATIONSELECTEDTEXT, ZANNOTATIONNOTE 
+         FROM ZAEANNOTATION 
+         WHERE ZANNOTATIONASSETID IS NOT NULL 
+         AND ZANNOTATIONASSETID != ''
+         AND ZANNOTATIONSELECTEDTEXT IS NOT NULL
+         AND ZANNOTATIONSELECTEDTEXT != ''"
+    )?;
     
     let annotations = stmt.query_map([], |row| {
         Ok(Annotation {

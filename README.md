@@ -1,5 +1,7 @@
 # Tauri + React + Typescript
 
+like [obsidian-ibook-plugin](https://github.com/bingryan/obsidian-ibook-plugin/blob/9eb94c0d25dc4de5ef6e9a8e7d11c5e4447a7770/src/api/ibook.ts#L38)
+
 This template should help get you started developing with Tauri, React and Typescript in Vite.
 
 ![](https://kingan-md-img.oss-cn-guangzhou.aliyuncs.com/blog/20250106131802068.png?x-oss-process=image/format,webp/resize,w_640)

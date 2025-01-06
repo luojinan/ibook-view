@@ -14,10 +14,10 @@ export const AnnotationList: FC<AnnotationListProps> = ({ annotations }) => {
           <div key={index} className="card bg-base-100 shadow-md mb-2">
             <div className="card-body p-4">
               {annotation.text && (
-                <p className="text-base">{annotation.text}</p>
+                <p className="text-base">🔖 {index+1}、{annotation.text}</p>
               )}
               {annotation.note && (
-                <p className="text-sm opacity-70 mt-2">Note: {annotation.note}</p>
+                <p className="text-sm opacity-70 mt-2">✍️ Note: {annotation.note}</p>
               )}
             </div>
           </div>

@@ -1,13 +1,13 @@
 export interface Book {
-  id: number
+  id: string
   title: string
   author: string
   path: string
+  notesCount?: number
 }
 
 export interface Annotation {
-  id: number
-  book_id: number
+  book_id: string
   text: string
   note: string
 }

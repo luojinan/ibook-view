@@ -10,8 +10,13 @@ export const processIBooksData = (books: Book[], annotations: Annotation[]): Pro
     annotationsByBookId.get(annotation.book_id).push(annotation)
   })
   
+  const booksWithNotes = books.map(book => ({
+    ...book,
+    notesCount: annotationsByBookId.get(book.id)?.length || 0
+  }))
+  
   return {
-    books,
+    books: booksWithNotes,
     annotationsByBookId
   }
 }

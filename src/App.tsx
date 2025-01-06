@@ -12,7 +12,7 @@ function App() {
   const [data, setData] = useState<ProcessedIBooksData | null>(null)
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [_error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const cachedData = getIBooksData()
