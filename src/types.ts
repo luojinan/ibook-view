@@ -17,3 +17,7 @@ export interface IBooksData {
   annotations: Annotation[]
   lastUpdated?: number
 }
+export interface ProcessedIBooksData {
+  books: Book[]
+  annotationsByBookId: Map<string, Annotation[]>
+}

@@ -1,19 +1,25 @@
 import { invoke } from '@tauri-apps/api/core'
 import { useEffect, useState } from 'react'
-import { IBooksData } from './types'
+import { IBooksData, type ProcessedIBooksData } from './types'
 import { WelcomePage } from './components/WelcomePage'
 import { saveIBooksData, getIBooksData } from './utils/storage'
 import { ThemeToggle } from './components/ThemeToggle'
+import { processIBooksData } from './utils/dataProcessing'
+import { AnnotationList } from './components/AnnotationList'
+import { BookList } from './components/BookList'
 
 function App() {
-  const [data, setData] = useState<IBooksData | null>(null)
+  const [data, setData] = useState<ProcessedIBooksData | null>(null)
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const cachedData = getIBooksData()
     if (cachedData) {
-      setData(cachedData)
+      const processedData = processIBooksData(cachedData.books, cachedData.annotations)
+      console.log('---',processedData)
+      setData(processedData)
     }
   }, [])
 
@@ -22,14 +28,17 @@ function App() {
     setError(null)
     try {
       const result = await invoke<IBooksData>('get_ibooks_data')
+      const processedData = processIBooksData(result.books, result.annotations)
+      console.log('---',processedData)
       saveIBooksData(result)
-      setData(result)
+      setData(processedData)
     } catch (err) {
       setError(err as string)
     } finally {
       setLoading(false)
     }
   }
+
 
   if (!data) {
     return <WelcomePage onFetchData={handleFetchData} loading={loading} />
@@ -57,29 +66,18 @@ function App() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <h2 className="text-xl font-semibold mb-2">Books</h2>
-          <ul className="space-y-2">
-            {data.books.map(book => (
-              <li key={book.id} className="p-2 border rounded">
-                <h3 className="font-medium">{book.title}</h3>
-                <p className="text-sm text-gray-600">{book.author}</p>
-              </li>
-            ))}
-          </ul>
+          <BookList 
+            books={data?.books || []}
+            selectedBookId={selectedBookId}
+            onSelectBook={setSelectedBookId}
+          />
         </div>
-
         <div>
-          <h2 className="text-xl font-semibold mb-2">Annotations</h2>
-          <ul className="space-y-2">
-            {data.annotations.map(annotation => (
-              <li key={annotation.id} className="p-2 border rounded">
-                <p className="text-gray-800">{annotation.text}</p>
-                {annotation.note && (
-                  <p className="text-sm text-gray-600 mt-1">Note: {annotation.note}</p>
-                )}
-              </li>
-            ))}
-          </ul>
+          {selectedBookId && (
+            <AnnotationList 
+              annotations={data?.annotationsByBookId.get(selectedBookId) || []}
+            />
+          )}
         </div>
       </div>
     </div>
