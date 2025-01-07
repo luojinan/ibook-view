@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core'
 import { useEffect, useState } from 'react'
-import { IBooksData, type ProcessedIBooksData } from './types'
+import type { IBooksData, ProcessedIBooksData } from './types'
 import { WelcomePage } from './components/WelcomePage'
 import { saveIBooksData, getIBooksData } from './utils/storage'
 import { ThemeToggle } from './components/ThemeToggle'

@@ -1,5 +1,36 @@
 # Tauri + React + Typescript
 
+## todo
+
+- ✅ 桌面端点击按钮读取ibook数据
+- 🤔 获取到的数据，应该存储到什么地方，既方便上传又方便读取？
+  - OSS？上传容易(设置apikey即可)，读取不受限制？（好像只能是js不能直接是json？）（json不让读？）
+  - 坚果云？上传容易，读取受限制？有办法设置web读取不受限制吗？
+  - github？上传困难（要设置ssh？或者输入账号密码可以吗？），读取容易
+- 🤔 创建一个静态web，如: github page，来可视化数据？
+  - 🤔 那桌面端的可视化是否还有必要？
+  - 🤔 桌面端的可视化只是一个，嵌入iframe静态web，如: github page？
+- 🤔 不依赖 macbook，只有phone端ibook，依赖分享邮件的方式导出文本内容的数据？
+  - 需要搭建server服务，来暴露一个接口给outlook接收邮件触发(webhook)
+  - 尝试用免费的 cloudflare worker 实现webhook？
+  - webhook需要把邮件文本内容处理成json数据，上传到一个地方，和tauri桌面端同理，在静态web上读取数据展示
+
+## monorepo
+
+```
+monorepo-tauri
+├── packages
+│   └── terminal-app
+│       ├── src                # Source code for the terminal application
+│       ├── src-tauri         # Tauri-specific source code and configuration
+│       ├── package.json       # Configuration for the terminal application
+│       └── README.md          # Documentation for the terminal application
+├── pnpm-workspace.yaml        # Workspace configuration for pnpm
+├── package.json                # Root configuration for shared dependencies
+├── .gitignore                  # Files and directories to ignore by Git
+└── README.md                   # Documentation for the entire monorepo project
+```
+
 like [obsidian-ibook-plugin](https://github.com/bingryan/obsidian-ibook-plugin/blob/9eb94c0d25dc4de5ef6e9a8e7d11c5e4447a7770/src/api/ibook.ts#L38)
 
 This template should help get you started developing with Tauri, React and Typescript in Vite.
